@@ -3,7 +3,7 @@
 import Link from "next/link"
 import Image from "next/image"
 import { useState, useEffect } from "react"
-import { signIn, signOut, useSession, getProviders } from 'next-auth'
+import { signIn, signOut, useSession, getProviders } from 'next-auth/react'
 
 const Nav = () => {
 
@@ -13,14 +13,11 @@ const Nav = () => {
     const [toggleDropdown, setToggleDropdown] = useState(false);
 
     useEffect(() => {
-        const setProviders = async () => {
-            const response = await getProviders();
-
-            setProviders(response);
-        }
-
-        setProviders();
-    }, [])
+        (async () => {
+            const res = await getProviders();
+            setProviders(res);
+        })();
+    }, []);
 
     return (
         <nav className="flex-between w-full mb-16 pt-3">
